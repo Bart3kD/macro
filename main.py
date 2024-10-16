@@ -1,116 +1,64 @@
-import pyautogui
 import time
-from pynput import mouse
+import sys
+from pynput import mouse, keyboard
 
-class Macro:
-    def __init__(self):
-        self.running = True
+from melonMacro import MelonMacro
+from wheatMacro import WheatMacro
+from macro import Macro
 
-    def move(self, direction: str, duration: float) -> None:
-        """Perform a key press in the given direction for a specified duration."""
-        keys = {
-            "left": "A",
-            "right": "D",
-            "forward": "W",
-            "back": "S"
-        }
-        key = keys.get(direction, "W")
-        pyautogui.keyDown(key)
-        time.sleep(duration)
-        pyautogui.keyUp(key)
-
-    def melon_loop(self, repetitions: int = 9, forward_duration: float = 0.5, side_duration: float = 8.7) -> None:
-        movement_pattern = [
-            ("right", side_duration),
-            ("forward", forward_duration),
-            ("left", side_duration),
-            ("forward", forward_duration),
-        ]
-
-        while self.running:
-            
-            if not self.running:
-                break
-
-            if self.running:
-                pyautogui.typewrite("/")
-                pyautogui.press("up")
-                pyautogui.press("enter")
-
-            pyautogui.mouseDown()
-
-            for _ in range(repetitions):
-                if not self.running:
-                    break
-                for direction, duration in movement_pattern:
-                    if not self.running:
-                        break
-                    self.move(direction, duration)
-
-            if self.running:
-                self.move("right", side_duration)
-
-            pyautogui.mouseUp()
-        
-    def wheat_loop(self, repetitions: int=11, forward_duration: float = 0.5, side_duration: float = 15) -> None:
-        movement_pattern = [
-            ("back", side_duration),
-            ("right", 0.1),
-            ("forward", side_duration - 1),
-        ]
-
-        while self.running:
-            
-            if not self.running:
-                break
-
-            if self.running:
-                pyautogui.typewrite("/")
-                pyautogui.press("up")
-                pyautogui.press("enter")
-            
-            pyautogui.mouseDown()
-
-            if self.running:
-                self.move("forward", side_duration + 0.2)
-
-            for _ in range(repetitions):
-                if not self.running:
-                    break
-                for direction, duration in movement_pattern:
-                    if not self.running:
-                        break
-                    self.move(direction, duration)
-
-            if self.running:
-                self.move("back", side_duration)
-
-            pyautogui.mouseUp()
-
-
-    def stop(self):
-        """Stop the macro."""
-        self.running = False
-        pyautogui.keyUp("W")
-        pyautogui.keyUp("D")
-        pyautogui.keyUp("A")
-        pyautogui.keyUp("S")
-        pyautogui.mouseUp()
-
+def get_macro(macro_type: str) -> Macro:
+    match macro_type:
+        case "melon":
+            return MelonMacro()
+        case "wheat":
+            return WheatMacro()
+        case _:
+            raise ValueError(f"Unknown macro type: {macro_type}")
 
 def on_click(x, y, button, pressed):
     if button == mouse.Button.x1 and pressed:
         macro.stop()
         print("Macro stopped")
 
+def on_press(key):
+    try:
+        if key.char == 'y':
+            macro.stop()
+            print("Macro stopped")
+    except AttributeError:
+        pass
 
-macro = Macro()
+def start_listeners():
+    mouse_listener = mouse.Listener(on_click=on_click)
+    keyboard_listener = keyboard.Listener(on_press=on_press)
+    mouse_listener.start()
+    keyboard_listener.start()
+    return mouse_listener, keyboard_listener
 
-listener = mouse.Listener(on_click=on_click)
-listener.start()
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: script.py <macro_type>")
+        sys.exit(1)
 
-time.sleep(2)
+    macro_type = sys.argv[1]
+    global macro
+    try:
+        macro = get_macro(macro_type)
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
-macro.wheat_loop()
+    mouse_listener, keyboard_listener = start_listeners()
 
-listener.stop()
+    time.sleep(2)
+
+    if macro_type == "melon":
+        macro.loop(9, 8.7, 0.5)
+    elif macro_type == "wheat":
+        macro.loop(9, 15, 0.1)
+
+    mouse_listener.stop()
+    keyboard_listener.stop()
+
+if __name__ == "__main__":
+    main()
