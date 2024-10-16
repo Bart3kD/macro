@@ -2,8 +2,8 @@ import time
 import sys
 from pynput import mouse, keyboard
 
-from melonMacro import MelonMacro
-from wheatMacro import WheatMacro
+from melon_macro import MelonMacro
+from wheat_macro import WheatMacro
 from macro import Macro
 
 def get_macro(macro_type: str) -> Macro:
