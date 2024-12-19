@@ -12,7 +12,6 @@ This project is a **macro program** I desinged to automate the farming in Hypixe
    ```bash
    pip install pynput pyautogui
    ```
-3. **Minecraft Client**: Ensure your Minecraft client is open and you are logged into Hypixel Skyblock.
 
 ---
 
@@ -38,7 +37,7 @@ This project is a **macro program** I desinged to automate the farming in Hypixe
    python main.py melon
    ```
 
-4. Wait 2 seconds after starting the script for initialization.
+4. You have 2 seconds to open the minecraft tab and then the macro starts.
 
 ### Stopping the Macro
 
@@ -46,31 +45,6 @@ This project is a **macro program** I desinged to automate the farming in Hypixe
 - **Keyboard**: Press the **`Y` key**.
 
 Both actions will immediately stop the macro.
-
----
-
-## Macro Descriptions
-
-### MelonMacro
-
-Automates the farming of melons with the following actions:
-1. Executes a `/` command to re-enable movement.
-2. Simulates mouse clicks to break melons.
-3. Moves in a repetitive pattern:
-   - Right
-   - Forward
-   - Left
-   - Forward
-
-### WheatMacro
-
-Automates the farming of wheat with the following actions:
-1. Executes the `/warp garden` command to ensure correct location.
-2. Simulates mouse clicks to harvest wheat.
-3. Moves in a repetitive pattern:
-   - Back
-   - Right
-   - Forward
 
 ---
 
@@ -97,21 +71,7 @@ Hypixel enforces strict rules against automation and macros. Use this program re
 
 ---
 
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Submit a pull request with a clear description of your changes.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
 ## Disclaimer
 
-This project is intended for educational purposes only. The author does not endorse or encourage rule-breaking activities in any online game.
+This project is intended for educational purposes only. I do not endorse or encourage rule-breaking activities in any online game.
 
