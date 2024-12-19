@@ -1,17 +1,6 @@
 # Hypixel Skyblock Farming Macro
 
-This project is a **macro program** I desinged to automate the farming in Hypixel Skyblock. The script will work only for a specific setup in game. If you want to use this program for yourself, you would have to edit the [melon_macro.py][melon_macro.py]
-
----
-
-## Features
-
-- **Customizable Farming Loops**: Automates movement patterns for farming specific crops.
-- **Two Macro Types**:
-  - `MelonMacro`: Optimized for melon farming.
-  - `WheatMacro`: Optimized for wheat farming.
-- **User Control**: Start, stop, or interrupt the macro at any time with mouse or keyboard inputs.
-- **Smooth Movement**: Uses simulated keypresses for seamless automation.
+This project is a **macro program** I desinged to automate the farming in Hypixel Skyblock. The script will work only for a specific setup in game. If you want to use this program for yourself, you would have to edit the [melon_macro](melon_macro.py) file or the [wheat_macro](wheat_macro.py) file by changing the loop function.
 
 ---
 
